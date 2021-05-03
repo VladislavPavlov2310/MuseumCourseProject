@@ -1,0 +1,27 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid pl-0 pr-0">
+    <div class="d-flex justify-content-between">
+        <div class="align-self-stretch h-75">
+            <img height="75%" src="{% static 'pompei-l.jpg' %}" alt="Welcome to museum!">
+        </div>
+        <div class="d-flex flex-column w-25 pt-5">
+            <form class="form-group" method="post">
+                {% csrf_token %}
+                <h1 class="h3 mb-3 font-weight-normal text-center">Register</h1>
+                {{ register_form.as_p }}
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+            </form>
+        </div>
+        <div class="align-self-stretch h-75">
+            <img height="75%" src="{% static 'pompei-r.jpg' %}" alt="Welcome to museum!">
+        </div>
+    </div>
+</div>
+{% endblock %}

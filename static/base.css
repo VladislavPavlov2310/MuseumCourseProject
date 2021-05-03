@@ -1,0 +1,14 @@
+#own-h1 {
+    : center;
+}
+
+.own-hr {
+    margin-top: 10px;
+    border: 2px solid;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+h1 {
+    font-family: Comic Sans, cursive;
+}

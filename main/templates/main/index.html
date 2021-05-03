@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+    <a href="{% url 'home' %}" class="navbar-brand mr-5">
+        <i class="bi bi-tornado mr-1"></i>
+        Museum
+    </a>
+    <!--    <div class="mr-3"></div>-->
+    <div class="collapse navbar-collapse ml-5" id="navbarCollapse">
+        <input class="form-control form-control-dark w-100 ml-5 mr-5" type="text" placeholder="Search"
+               aria-label="Search">
+        <div class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+            <a class="nav-item nav-link">{{ request.user.username }}</a>
+            <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
+            <a href="{% url 'register' %}" class="nav-item nav-link">Register</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+<div class="container-fluid pr-0 pl-0">
+    <div class="d-flex">
+        <div class="d-flex flex-column p-3 text-white bg-dark" style="width: 300px;">
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                {% if request.user.is_superuser %}
+                <li class="nav-item mb-2 bg-light rounded">
+                    <a href="{% url 'create_work' %}" class="nav-link">
+                        <i class="bi bi-plus-square mr-3"></i>
+                        Create Work
+                    </a>
+                </li>
+                <li class="nav-item mb-5 bg-light rounded">
+                    <a href="{% url 'create_collection' %}" class="nav-link">
+                        <i class="bi bi-plus-square mr-3"></i>
+                        Create Collection
+                    </a>
+                </li>
+                {% endif %}
+                <li>
+                    <a href="{% url 'collections' %}" class="nav-link text-white">
+                        <i class="bi bi-collection mr-3"></i>
+                        Collections
+                    </a>
+                    <div class="d-flex flex-column ml-4 mt-2">
+                        <p class="text-center">-Most viewed collections-</p>
+                        {% for card in collection_cards %}
+                        <div class="d-flex flex-column bg-dark" style="width: 200px;">
+                            <img style="height: 100px; object-fit: cover;" class=""
+                                 src="{{ card.collection_picture.url }}"
+                                 alt="card">
+                            <a href="{% url 'collection_detail' pk=card.pk %}"
+                               class="link-light card-title text-center">
+                                {{ card.collection_name|truncatechars:15 }}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <hr>
+                </li>
+                <li>
+                    <a href="{% url 'home' %}" class="nav-link text-white">
+                        <i class="bi bi-book mr-3"></i>
+                        Works
+                    </a>
+                    <div class="d-flex flex-column ml-4 mt-2">
+                        <p class="text-center">-Most viewed works-</p>
+                        {% for card in work_cards %}
+                        <div class="d-flex flex-column bg-dark" style="width: 200px;">
+                            <img style="height: 100px; object-fit: cover;" class="" src="{{ card.picture_source.url }}"
+                                 alt="card">
+                            <a href="{% url 'work_detail' pk=card.work.pk %}" class="link-light card-title text-center">
+                                {{ card.work.work_name|truncatechars:15 }}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <hr>
+                </li>
+                <li>
+                    <a href="#" class="nav-link text-white">
+                        <i class="bi bi-clock-history mr-3"></i>
+                        Exhibition
+                    </a>
+                </li>
+            </ul>
+            <hr>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+</div>
+
+</body>

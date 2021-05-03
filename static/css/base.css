@@ -1,0 +1,22 @@
+#own-h1 {
+    : center;
+}
+
+.own-hr {
+    margin-top: 10px;
+    border: 2px solid;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+p {
+    font-family: 'Century', serif;
+}
+
+h1 {
+    font-family: Arial, serif;
+}
+
+.login-div {
+    background-image: url({{static_url}})
+}

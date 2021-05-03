@@ -1,0 +1,25 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block title %}
+Add work
+{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column bg-light pb-5">
+    <div style="display: flex;">
+        <img style="width: 100%;" src="{% static 'mik-banner.jpg' %}" alt="Welcome to museum!">
+    </div>
+    <h1 class="text-center mt-3 pb-3">Add work</h1>
+    <div class="container">
+        <form method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {{ work_form.as_p }}
+                {{ work_picture_form.as_p }}
+            </fieldset>
+            <button type="submit" class="btn btn-success">Add</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

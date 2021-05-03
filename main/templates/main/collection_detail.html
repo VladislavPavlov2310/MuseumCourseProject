@@ -1,0 +1,37 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block title %}
+{{ collection.collection_name }}
+{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column bg-light">
+    <div style="display: flex;">
+        <img style="width: 100%;" src="{% static 'mik-banner.jpg' %}" alt="Welcome to museum!">
+    </div>
+    <h1 class="text-center mt-3">{{ collection.collection_name }}</h1>
+    <div class="container mt-3">
+        <div class="d-flex">
+            <div class="d-flex flex-column mb-3" style="height: auto;">
+                <p class="w-75">{{ collection.collection_description }}</p>
+            </div>
+
+            <div class="d-flex flex-column pr-5">
+                <h2 class="text-center">-Collection works-</h2>
+                {% for work_image in work_images %}
+                <div class="d-flex flex-column align-items-center">
+                    <div class="align-self-center p-2">
+                        <img style="width: 200px; padding-top: 15px; padding-bottom: 15px;"
+                             src="{{ work_image.picture_source.url }}" alt="{{ image.work.work_name }}">
+                    </div>
+                    <p>{{ work_image.work.work_name }}</p>
+                    <p><small>{{ work_image.work.work_artist }}</small></p>
+                </div>
+                <hr class="own-hr">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

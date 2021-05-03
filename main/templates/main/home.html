@@ -1,0 +1,46 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block title %}
+Works
+{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column bg-light">
+    <div style="display: flex;">
+        <img style="width: 100%;" src="{% static 'mik-banner.jpg' %}" alt="Welcome to museum!">
+    </div>
+    <h1 class="text-center mt-3" style="">Works</h1>
+    <div class="container">
+        {% for image in work_images %}
+        <div class="d-flex mb-3 justify-content-between" style="height: auto;">
+            <div class="d-flex flex-column">
+                <div class="d-flex pt-3">
+                    <h3><a class="link-dark" href="{% url 'work_detail' pk=image.work.pk %}"
+                           style="text-decoration: none;">{{ image.work.work_name}}</a></h3>
+                    {% if request.user.is_superuser %}
+                    <div class="ml-3">
+                        <a class="btn btn-danger" href="{% url 'delete' pk=image.work.pk %}"
+                           role="button">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                <p class="w-75 mt-2">{{ image.work.work_description|truncatechars:100 }}</p>
+                <p class="mt-auto"><strong>{{ image.work.work_artist }}</strong></p>
+                <div class="d-flex">
+                    <p class="mr-3">{{ image.work.post_date | date:'b d, Y' }}</p>
+                    <p><i class="bi bi-eye mr-1"></i>{{ image.work.work_views }}</p>
+                </div>
+            </div>
+            <div class="align-self-center p-2 bd-highlight">
+                <img style="width: 250px; padding-top: 15px; padding-bottom: 15px; margin-left: 30px;"
+                     src="{{ image.picture_source.url }}" alt="{{ image.work.work_name }}">
+            </div>
+        </div>
+        <hr class="own-hr">
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
